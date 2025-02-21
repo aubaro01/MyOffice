@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::apiResource('clientes', ClienteController::class);
+// Repita para veiculos, marcas, modelos e marcacoes
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

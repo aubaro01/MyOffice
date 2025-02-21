@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Cliente;
 class ClienteController extends Controller
 {
     /**
@@ -13,51 +14,31 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        return Cliente::all();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        return Cliente::create($request->all());
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
-        //
+        return Cliente::findOrFail($id);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        $cliente->update($request->all());
+        return $cliente;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
-        //
+        Cliente::destroy($id);
+        return response()->noContent();
     }
+
 }
+// Compare this snippet from Backend/app/Http/Controllers/VeiculoController.php:
