@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\TipoMarcacao;
@@ -7,79 +6,45 @@ use Illuminate\Http\Request;
 
 class TipoMarcacaoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Listar todos os tipos de marcação
     public function index()
     {
-        //
+        return TipoMarcacao::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Criar um novo tipo de marcação
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Marcacao' => 'required|string|max:50',
+        ]);
+
+        return TipoMarcacao::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TipoMarcacao  $tipoMarcacao
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TipoMarcacao $tipoMarcacao)
+    // Mostrar um tipo de marcação específico
+    public function show($id)
     {
-        //
+        return TipoMarcacao::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TipoMarcacao  $tipoMarcacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoMarcacao $tipoMarcacao)
+    // Atualizar um tipo de marcação
+    public function update(Request $request, $id)
     {
-        //
+        $tipoMarcacao = TipoMarcacao::findOrFail($id);
+
+        $request->validate([
+            'Marcacao' => 'sometimes|string|max:50',
+        ]);
+
+        $tipoMarcacao->update($request->all());
+        return $tipoMarcacao;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TipoMarcacao  $tipoMarcacao
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TipoMarcacao $tipoMarcacao)
+    // Excluir um tipo de marcação
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\TipoMarcacao  $tipoMarcacao
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TipoMarcacao $tipoMarcacao)
-    {
-        //
+        TipoMarcacao::destroy($id);
+        return response()->noContent();
     }
 }

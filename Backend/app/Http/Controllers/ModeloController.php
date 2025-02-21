@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Modelo;
@@ -7,79 +6,47 @@ use Illuminate\Http\Request;
 
 class ModeloController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Listar todos os modelos
     public function index()
     {
-        //
+        return Modelo::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Criar um novo modelo
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_Marca' => 'required|integer|exists:marca,id_Marca',
+            'Nome_modelo' => 'required|string|max:50',
+        ]);
+
+        return Modelo::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Modelo  $modelo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Modelo $modelo)
+    // Mostrar um modelo específico
+    public function show($id)
     {
-        //
+        return Modelo::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Modelo  $modelo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Modelo $modelo)
+    // Atualizar um modelo
+    public function update(Request $request, $id)
     {
-        //
+        $modelo = Modelo::findOrFail($id);
+
+        $request->validate([
+            'id_Marca' => 'sometimes|integer|exists:marca,id_Marca',
+            'Nome_modelo' => 'sometimes|string|max:50',
+        ]);
+
+        $modelo->update($request->all());
+        return $modelo;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Modelo  $modelo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Modelo $modelo)
+    // Excluir um modelo
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Modelo  $modelo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Modelo $modelo)
-    {
-        //
+        Modelo::destroy($id);
+        return response()->noContent();
     }
 }

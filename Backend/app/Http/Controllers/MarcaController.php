@@ -7,79 +7,45 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Listar todas as marcas
     public function index()
     {
-        //
+        return Marca::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Criar uma nova marca
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Nome_Marca' => 'required|string|max:30',
+        ]);
+
+        return Marca::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Marca  $marca
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Marca $marca)
+    // Mostrar uma marca específica
+    public function show($id)
     {
-        //
+        return Marca::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Marca  $marca
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Marca $marca)
+    // Atualizar uma marca
+    public function update(Request $request, $id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+
+        $request->validate([
+            'Nome_Marca' => 'sometimes|string|max:30',
+        ]);
+
+        $marca->update($request->all());
+        return $marca;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Marca  $marca
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Marca $marca)
+    // Excluir uma marca
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Marca  $marca
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Marca $marca)
-    {
-        //
+        Marca::destroy($id);
+        return response()->noContent();
     }
 }

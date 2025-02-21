@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\MarcaController;
@@ -20,13 +20,17 @@ use App\Http\Controllers\TipoMarcacaoController;
 */
 
 
-Route::apiResource('clientes', ClienteController::class);
-Route::apiResource('marcas', MarcaController::class);
-Route::apiResource('modelos', ModeloController::class);
-Route::apiResource('veiculos', VeiculoController::class);
-Route::apiResource('marcacoes', MarcacaoController::class);
-Route::apiResource('tipos-marcacao', TipoMarcacaoController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Rotas públicas
+Route::post('/login', [AuthController::class, 'login']);
+
+// Rotas protegidas
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('clientes', ClienteController::class);
+    Route::apiResource('marcas', MarcaController::class);
+    Route::apiResource('modelos', ModeloController::class);
+    Route::apiResource('veiculos', VeiculoController::class);
+    Route::apiResource('marcacoes', MarcacaoController::class);
+    Route::apiResource('tipos-marcacao', TipoMarcacaoController::class);
 });

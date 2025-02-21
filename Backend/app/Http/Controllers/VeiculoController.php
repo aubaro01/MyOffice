@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Veiculo;
@@ -7,79 +6,55 @@ use Illuminate\Http\Request;
 
 class VeiculoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Listar todos os veículos
     public function index()
     {
-        //
+        return Veiculo::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Criar um novo veículo
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_Cliente' => 'required|integer|exists:cliente,id_Cliente',
+            'id_Marca' => 'required|integer|exists:marca,id_Marca',
+            'id_Modelo' => 'required|integer|exists:modelo,id_Modelo',
+            'Matricula_veiculo' => 'required|string|max:12|unique:veiculo,Matricula_veiculo',
+            'Km_veiculo' => 'required|string|max:255',
+            'obs' => 'nullable|string|max:255',
+        ]);
+
+        return Veiculo::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Veiculo  $veiculo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Veiculo $veiculo)
+    // Mostrar um veículo específico
+    public function show($id)
     {
-        //
+        return Veiculo::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Veiculo  $veiculo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Veiculo $veiculo)
+    // Atualizar um veículo
+    public function update(Request $request, $id)
     {
-        //
+        $veiculo = Veiculo::findOrFail($id);
+
+        $request->validate([
+            'id_Cliente' => 'sometimes|integer|exists:cliente,id_Cliente',
+            'id_Marca' => 'sometimes|integer|exists:marca,id_Marca',
+            'id_Modelo' => 'sometimes|integer|exists:modelo,id_Modelo',
+            'Matricula_veiculo' => 'sometimes|string|max:12|unique:veiculo,Matricula_veiculo,' . $veiculo->id_Veiculo,
+            'Km_veiculo' => 'sometimes|string|max:255',
+            'obs' => 'sometimes|string|max:255',
+        ]);
+
+        $veiculo->update($request->all());
+        return $veiculo;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Veiculo  $veiculo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Veiculo $veiculo)
+    // Excluir um veículo
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Veiculo  $veiculo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Veiculo $veiculo)
-    {
-        //
+        Veiculo::destroy($id);
+        return response()->noContent();
     }
 }
