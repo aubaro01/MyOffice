@@ -9,22 +9,17 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Login para administradores
     public function login(Request $request)
     {
-        $request->validate([
-            'Log_admin' => 'required|string',
-            'Pass_admin' => 'required|string',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        $admin = Admin::where('Log_admin', $request->Log_admin)->first();
-
-        if (!$admin || !Hash::check($request->Pass_admin, $admin->Pass_admin)) {
-            return response()->json(['message' => 'Credenciais inválidas'], 401);
+        if (Auth::attempt($credentials)) {
+            // Autenticação bem-sucedida
+            return redirect()->intended('/dashboard');
         }
 
-        $token = $admin->createToken('auth_token')->plainTextToken;
-        return response()->json(['token' => $token]);
+        // Autenticação falhou
+        return back()->withErrors(['email' => 'Credenciais inválidas']);
     }
 
     // Logout

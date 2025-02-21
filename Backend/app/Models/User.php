@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-        protected $table = 'nome_da_tabela_usuarios'; // Nome da tabela de usuários
-        protected $fillable = ['nome', 'email', 'password'];
+        protected $table = 'user'; // Nome da tabela de usuários
+        protected $fillable = ['Nome_admin', 'Log_admin', 'Pass_admin'];
     
 }
