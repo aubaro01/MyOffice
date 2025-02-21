@@ -28,6 +28,9 @@ const Home = () => {
                 <a className="nav-link" href="#produto">Produto</a>
               </li>
               <li className="nav-item">
+                <a className="nav-link" href="#contato">Contato</a>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link btn btn-outline-dark" href="/login">Login</a>
               </li>
             </ul>

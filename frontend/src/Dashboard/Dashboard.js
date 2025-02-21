@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from '../components/SideBar';
-import SummaryCard from '../components/card';
-import LogoutButton from '../components/LogoutButton'; // Importe o botão de logout
+import SummaryCard from './components/card';
+import LogoutButton from './components/LogoutButton'; // Importe o botão de logout
 
 const Dashboard = () => {
   return (

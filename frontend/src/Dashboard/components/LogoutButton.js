@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/Authcontext';
+import { useAuth } from '../../context/Authcontext';
 
 const LogoutButton = () => {
   const { logout } = useAuth(); // Função de logout do contexto de autenticação

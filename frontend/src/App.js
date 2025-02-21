@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/login';
-import Dashboard from './pages/Dashboard';
-import Clientes from './pages/ClientsList';
-import Veiculos from './pages/VeiculoList';
-import Marcacoes from './pages/MarcacaoList';
+import Dashboard from './Dashboard/Dashboard';
+import Clientes from './Dashboard/ClientsList';
+import Veiculos from './Dashboard/VeiculoList';
+import Marcacoes from './Dashboard/MarcacaoList';
 import Home from './pages/home';
 
 const App = () => {
