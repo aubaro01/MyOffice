@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['nome', 'email', 'telefone'];
+    protected $table = 'cliente';
+    protected $primaryKey = 'id_Cliente';
+    protected $fillable = ['Nome_Cliente', 'Contacto_Cliente', 'Email_Cliente', 'NIF', 'obs'];
+    public $timestamps = false;
 
     public function veiculos()
     {
-        return $this->hasMany(Veiculo::class);
+        return $this->hasMany(Veiculo::class, 'id_Cliente');
     }
-
 }

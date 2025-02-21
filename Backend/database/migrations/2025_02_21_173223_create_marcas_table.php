@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('marcas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+     
+            Schema::create('marcas', function (Blueprint $table) {
+                $table->id();
+                $table->string('nome');
+                $table->timestamps();
+            });
+        
     }
 
     /**
