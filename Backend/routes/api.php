@@ -26,6 +26,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/clientes', [ClienteController::class, 'index']);
 Route::get('/veiculos', [VeiculoController::class, 'index']);
 Route::get('/marcacoes', [MarcacaoController::class, 'index']);
+
 // Rotas protegidas
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

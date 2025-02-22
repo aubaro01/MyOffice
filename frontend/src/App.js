@@ -12,9 +12,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<Home />} />
-        {/* Redireciona a raiz ("/") para a dashboard */}
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        {/* Rota raiz */}
+        <Route path="/home" element={<Home />} />
 
         {/* Rota de login */}
         <Route path="/login" element={<Login />} />
@@ -23,35 +22,37 @@ const App = () => {
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            //Colocar private para auth
+            <Dashboard />
           }
         />
         <Route
           path="/clientes"
           element={
-            <PrivateRoute>
+                        //Colocar private para auth
+
               <Clientes />
-            </PrivateRoute>
+          
           }
         />
         <Route
           path="/veiculos"
           element={
-            <PrivateRoute>
+                        //Colocar private para auth
+
               <Veiculos />
-            </PrivateRoute>
           }
         />
         <Route
           path="/marcacoes"
           element={
-            <PrivateRoute>
-              <Marcacoes />
-            </PrivateRoute>
+            //Colocar private para auth
+            <Marcacoes />
           }
         />
+
+        {/* Rota para páginas não encontradas (fallback) */}
+        <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
       </Routes>
     </Router>
   );

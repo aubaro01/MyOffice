@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LogoutButton from '../Dashboard/components/LogoutButton'; // Importe o botão de logout
+import LogoutButton from '../components/LogoutButton'; // Importe o botão de logout
 
 const Sidebar = () => {
   return (
