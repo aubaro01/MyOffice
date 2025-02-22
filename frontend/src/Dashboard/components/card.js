@@ -1,15 +1,21 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importa o CSS do Bootstrap
-//import 'unicons/css/line.css'; // Ícones
 
 const Card = ({ icon, title, value }) => {
-    return (
-        <div className="card text-center p-3 m-2 shadow-sm">
-            <i className={icon}></i>
-            <h3 className="h5 mt-2">{title}</h3>
-            <p className="lead">{value}</p>
+  return (
+    <div className="card shadow-sm">
+      <div className="card-body">
+        <div className="d-flex align-items-center">
+          <div className="me-3">
+            <i className={icon} style={{ fontSize: '2rem', color: '#6c757d' }}></i>
+          </div>
+          <div>
+            <h5 className="card-title mb-1">{title}</h5>
+            <p className="card-text fs-4 fw-bold">{value}</p>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Card;

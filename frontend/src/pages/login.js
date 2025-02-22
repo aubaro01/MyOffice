@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../configure/axiosConfig';
 import './login.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { AuthContext } from '../context/Authcontext'; // Importe o AuthContext
 
 const Login = () => {
   const [form, setForm] = useState({ Log_admin: '', Pass_admin: '' });
@@ -12,6 +13,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const userRef = useRef(null);
+  const { login } = useContext(AuthContext); // Use o login do contexto
 
   useEffect(() => {
     if (userRef.current) {
@@ -32,12 +34,15 @@ const Login = () => {
 
     try {
       const response = await axios.post('/login', form, { withCredentials: true });
-      localStorage.setItem('isLoggedIn', 'true');
+      console.log('Resposta da API:', response.data); // Verifique a resposta da API
+
+      login(); // Chama a função login do contexto
       setSuccess(true);
       setForm({ Log_admin: '', Pass_admin: '' });
-      setTimeout(() => navigate('/dashboard'), 2000);
+      navigate('/dashboard'); // Redireciona imediatamente após o login
     } catch (error) {
       setError('Credenciais inválidas ou erro no servidor');
+      console.error('Erro no login:', error); // Log de erro
     } finally {
       setLoading(false);
     }
@@ -91,6 +96,15 @@ const Login = () => {
             {loading ? 'Carregando...' : 'Entrar'}
           </button>
         </form>
+
+        {/* Botão "Voltar para a Home" */}
+        <button
+          onClick={() => navigate('/home')}
+          className="btn btn-secondary w-100 mt-3"
+        >
+          Voltar para a Home
+        </button>
+
         <p className="text-center mt-3">
           <button onClick={() => navigate('/recuperar-senha')} className="forgot-password">
             Esqueceu a senha?

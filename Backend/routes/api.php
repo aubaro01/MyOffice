@@ -8,6 +8,8 @@ use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\VeiculoController;
 use App\Http\Controllers\MarcacaoController;
 use App\Http\Controllers\TipoMarcacaoController;
+use App\Http\Controllers\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -62,6 +64,11 @@ Route::get('/tipos-marcacao/{id}', [TipoMarcacaoController::class, 'show']);
 Route::post('/tipos-marcacao', [TipoMarcacaoController::class, 'store']);
 Route::delete('/tipos-marcacao/{id}', [TipoMarcacaoController::class, 'destroy']);
 
+
+// Rotas Dashboard
+Route::get('/clientes/count', [DashboardController::class, 'totalClientes']);
+Route::get('/veiculos/count', [DashboardController::class, 'totalVeiculos']);
+Route::get('/marcacoes/count', [DashboardController::class, 'totalMarcacoesMes']);
 
 // Rotas protegidas
 Route::middleware('auth:sanctum')->group(function () {
