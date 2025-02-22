@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
+import Login from './pages/login';
+import Dashboard from './Dashboard/Dashboard';
+import ClientesList from './Dashboard/ClientsList';
+import VeiculosList from './Dashboard/VeiculoList'; 
+import VeiculoDetails from './Dashboard/VeiculoDetails'; 
+import Marcacoes from './Dashboard/MarcacaoList';
+import Home from './pages/home';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Rota para a página inicial */}
+        <Route path="/home" element={<Home />} />
+
+        {/* Rota para o login */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Rotas protegidas (com autenticação) */}
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/clientes"
+          element={
+            <PrivateRoute>
+              <ClientesList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/veiculos"
+          element={
+            <PrivateRoute>
+              <VeiculosList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/veiculos/:id"
+          element={
+            <PrivateRoute>
+              <VeiculoDetails />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/marcacoes"
+          element={
+            <PrivateRoute>
+              <Marcacoes />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Redireciona a rota raiz ("/") para a página inicial */}
+        <Route path="/" element={<Navigate to="/home" />} />
+
+        {/* Rota para páginas não encontradas (fallback) */}
+        <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

@@ -2,43 +2,26 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // Nome da tabela no banco de dados
+    protected $table = 'admin';
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // Colunas que podem ser preenchidas em massa
+    protected $fillable = ['Nome_admin', 'Log_admin', 'Pass_admin'];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // Desativa o uso de timestamps (created_at e updated_at)
+    public $timestamps = false;
+
+    // Desativa o uso de lembretes de senha (password reset)
+    public function getAuthPassword()
+    {
+        return $this->Pass_admin; // Usa a coluna 'Pass_admin' como senha
+    }
 }
