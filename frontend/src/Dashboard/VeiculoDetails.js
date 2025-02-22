@@ -3,24 +3,24 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importa o Bootstrap
 
-const ClienteDetails = () => {
-    const [cliente, setCliente] = useState(null);
+const VeiculoDetails = () => {
+    const [veiculo, setVeiculo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Obtém o ID do cliente da URL
+    // Obtém o ID do veículo da URL
     const { id } = useParams();
 
-    // Busca os detalhes do cliente ao carregar o componente
+    // Busca os detalhes do veículo ao carregar o componente
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/clientes/${id}`)
+        axios.get(`http://localhost:8000/api/veiculos/${id}`)
             .then(response => {
-                setCliente(response.data);
+                setVeiculo(response.data);
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Erro ao buscar detalhes do cliente:', error);
-                setError('Cliente não encontrado');
+                console.error('Erro ao buscar detalhes do veículo:', error);
+                setError('Veículo não encontrado');
                 setLoading(false);
             });
     }, [id]);
@@ -35,21 +35,24 @@ const ClienteDetails = () => {
 
     return (
         <div className="container mt-5">
-            <h2>Detalhes do Cliente</h2>
+            <h2>Detalhes do Veículo</h2>
             <div className="card shadow-sm">
                 <div className="card-body">
-                    <h4 className="card-title">Nome: {cliente.Nome_Cliente}</h4>
+                    <h4 className="card-title">Matrícula: {veiculo.Matricula_veiculo}</h4>
                     <p className="card-text">
-                        <strong>Contacto:</strong> {cliente.Contacto_Cliente}
+                        <strong>Cliente ID:</strong> {veiculo.id_Cliente}
                     </p>
                     <p className="card-text">
-                        <strong>Email:</strong> {cliente.Email_Cliente}
+                        <strong>Marca ID:</strong> {veiculo.id_Marca}
                     </p>
                     <p className="card-text">
-                        <strong>NIF:</strong> {cliente.NIF}
+                        <strong>Modelo ID:</strong> {veiculo.id_Modelo}
                     </p>
                     <p className="card-text">
-                        <strong>Observações:</strong> {cliente.obs}
+                        <strong>Quilometragem:</strong> {veiculo.Km_veiculo}
+                    </p>
+                    <p className="card-text">
+                        <strong>Observações:</strong> {veiculo.obs}
                     </p>
                 </div>
             </div>
@@ -57,4 +60,4 @@ const ClienteDetails = () => {
     );
 };
 
-export default ClienteDetails;
+export default VeiculoDetails;

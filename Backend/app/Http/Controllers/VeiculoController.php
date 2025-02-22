@@ -1,15 +1,24 @@
-<?php
+<?php 
+
 namespace App\Http\Controllers;
 
-use App\Models\Veiculo;
 use Illuminate\Http\Request;
+use App\Models\Veiculo;
 
 class VeiculoController extends Controller
 {
     // Listar todos os veículos
     public function index()
     {
-        return Veiculo::all();
+        $veiculos = Veiculo::all();
+        return response()->json($veiculos);
+    }
+
+    // Mostrar detalhes de um veículo específico
+    public function show($id)
+    {
+        $veiculo = Veiculo::findOrFail($id);
+        return response()->json($veiculo);
     }
 
     // Criar um novo veículo
@@ -24,16 +33,11 @@ class VeiculoController extends Controller
             'obs' => 'nullable|string|max:255',
         ]);
 
-        return Veiculo::create($request->all());
+        $veiculo = Veiculo::create($request->all());
+        return response()->json($veiculo, 201);
     }
 
-    // Mostrar um veículo específico
-    public function show($id)
-    {
-        return Veiculo::findOrFail($id);
-    }
-
-    // Atualizar um veículo
+    // Atualizar um veículo existente
     public function update(Request $request, $id)
     {
         $veiculo = Veiculo::findOrFail($id);
@@ -44,11 +48,11 @@ class VeiculoController extends Controller
             'id_Modelo' => 'sometimes|integer|exists:modelo,id_Modelo',
             'Matricula_veiculo' => 'sometimes|string|max:12|unique:veiculo,Matricula_veiculo,' . $veiculo->id_Veiculo,
             'Km_veiculo' => 'sometimes|string|max:255',
-            'obs' => 'sometimes|string|max:255',
+            'obs' => 'sometimes|nullable|string|max:255',
         ]);
 
         $veiculo->update($request->all());
-        return $veiculo;
+        return response()->json($veiculo);
     }
 
     // Excluir um veículo

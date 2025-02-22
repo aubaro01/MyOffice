@@ -20,12 +20,49 @@ use App\Http\Controllers\TipoMarcacaoController;
 */
 
 
-
-// Rotas públicas
+// Rotas Publicas
 Route::post('/login', [AuthController::class, 'login']);
+
+
+//Rotas cliente
+Route::get('/clientes/{id}', [ClienteController::class, 'show']);
+Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);
 Route::get('/clientes', [ClienteController::class, 'index']);
-Route::get('/veiculos', [VeiculoController::class, 'index']);
+Route::put('/clientes/{id}', [ClienteController::class, 'update']); 
+Route::post('/clientes', [ClienteController::class, 'store']);
+
+//Rotas Veiculos
+Route::get('/veiculos', [VeiculoController::class, 'index']); 
+Route::get('/veiculos/{id}', [VeiculoController::class, 'show']); 
+Route::post('/veiculos', [VeiculoController::class, 'store']); 
+Route::put('/veiculos/{id}', [VeiculoController::class, 'update']); 
+Route::delete('/veiculos/{id}', [VeiculoController::class, 'destroy']); 
+
+// Rotas Marcações
 Route::get('/marcacoes', [MarcacaoController::class, 'index']);
+Route::get('/marcacoes/{id}', [MarcacaoController::class, 'show']);
+Route::post('/marcacoes', [MarcacaoController::class, 'store']);
+Route::put('/marcacoes/{id}', [MarcacaoController::class, 'update']);
+Route::delete('/marcacoes/{id}', [MarcacaoController::class, 'destroy']);   
+
+// Rotas Marcas
+Route::get('/marcas', [MarcaController::class, 'index']);
+Route::get('/marcas/{id}', [MarcaController::class, 'show']);
+Route::post('/marcas', [MarcaController::class, 'store']);
+Route::delete('/marcas/{id}', [MarcaController::class, 'destroy']);
+
+// Rotas Modelos
+Route::get('/modelos', [ModeloController::class, 'index']);
+Route::get('/modelos/{id}', [ModeloController::class, 'show']);
+Route::post('/modelos', [ModeloController::class, 'store']);
+Route::delete('/modelos/{id}', [ModeloController::class, 'destroy']);
+
+// Rotas Tipos de Marcação
+Route::get('/tipos-marcacao', [TipoMarcacaoController::class, 'index']);
+Route::get('/tipos-marcacao/{id}', [TipoMarcacaoController::class, 'show']);
+Route::post('/tipos-marcacao', [TipoMarcacaoController::class, 'store']);
+Route::delete('/tipos-marcacao/{id}', [TipoMarcacaoController::class, 'destroy']);
+
 
 // Rotas protegidas
 Route::middleware('auth:sanctum')->group(function () {
