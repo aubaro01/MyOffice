@@ -43,7 +43,7 @@ const Home = () => {
         className="d-flex flex-column align-items-center justify-content-center text-white text-center"
         style={{ height: "100vh", background: "linear-gradient(to right, #343a40, #6c757d)" }}
       >
-        <h1 className="display-4 fw-bold">PC Auto</h1>
+        <h1 className="display-4 fw-bold">MyOffice</h1>
         <p className="lead">Gestão inteligente para oficinas automotivas</p>
       </section>
 
