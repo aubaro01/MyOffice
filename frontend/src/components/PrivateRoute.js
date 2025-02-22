@@ -1,12 +1,11 @@
-// src/components/PrivateRoute.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../context/Authcontext';
 
 const PrivateRoute = ({ children }) => {
-  // Exemplo simples: verificando se existe a flag "isLoggedIn" no localStorage
-  const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
+  const { isAuthenticated } = useContext(AuthContext); // Verifica o estado de autenticação
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/login" />; // Redireciona para o login se não estiver autenticado
 };
 
 export default PrivateRoute;

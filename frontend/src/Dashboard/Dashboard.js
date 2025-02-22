@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './components/NavBar';
-import Card from './components/card';
+import Card from './components/card'; // Importe o componente Card
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Dashboard = () => {
@@ -11,18 +11,22 @@ const Dashboard = () => {
   const [marcacoesHoje, setMarcacoesHoje] = useState([]);
 
   useEffect(() => {
+    // Busca o total de clientes
     axios.get('/api/totalClientes')
       .then(response => setTotalClientes(response.data.total))
       .catch(error => console.error('Erro ao buscar Clientes:', error));
 
+    // Busca o total de marcações
     axios.get('/api/totalMarcacao')
       .then(response => setTotalMarcacao(response.data.total))
       .catch(error => console.error('Erro ao buscar Marcações:', error));
 
+    // Busca o total de veículos
     axios.get('/api/totalVeiculos')
       .then(response => setTotalVeiculos(response.data.total))
       .catch(error => console.error('Erro ao buscar Veiculos:', error));
 
+    // Busca as marcações do dia
     axios.get('/api/marcacoesHoje')
       .then(response => setMarcacoesHoje(response.data))
       .catch(error => console.error('Erro ao buscar Marcações do Dia:', error));
@@ -51,13 +55,25 @@ const Dashboard = () => {
           {/* Statistics Cards */}
           <div className="row">
             <div className="col-md-4 mb-4">
-              <Card icon="uil uil-users-alt" title="Total de Clientes" value={totalClientes} />
+              <Card
+                icon="uil uil-users-alt"
+                title="Total de Clientes"
+                value={totalClientes}
+              />
             </div>
             <div className="col-md-4 mb-4">
-              <Card icon="uil uil-shopping-cart-alt" title="Total de Marcações" value={totalMarcacao} />
+              <Card
+                icon="uil uil-shopping-cart-alt"
+                title="Total de Marcações"
+                value={totalMarcacao}
+              />
             </div>
             <div className="col-md-4 mb-4">
-              <Card icon="uil uil-comments" title="Total de Veículos" value={totalVeiculos} />
+              <Card
+                icon="uil uil-car"
+                title="Total de Veículos"
+                value={totalVeiculos}
+              />
             </div>
           </div>
 
