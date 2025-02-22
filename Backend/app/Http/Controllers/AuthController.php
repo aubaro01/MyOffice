@@ -3,36 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('Log_admin', 'Pass_admin');
+        $login = $request->input('Log_admin');
+        $password = $request->input('Pass_admin');
 
-        // Verifica as credenciais
-        if (Auth::attempt($credentials)) {
-            // Gera um token de autenticação (usando Sanctum ou JWT)
-            $token = $request->user()->createToken('auth_token')->plainTextToken;
+        $admin = Admin::where('Log_admin', $login)->first();
 
-            return response()->json(['token' => $token], 200);
+        // Para teste rápido: comparação direta com senha em texto plano
+        if ($admin && $admin->Pass_admin === $password) {
+            session(['admin_id' => $admin->id]);
+            return response()->json(['message' => 'Login efetuado com sucesso'], 200);
+        } else {
+            return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
-
-        return response()->json(['message' => 'Credenciais inválidas'], 401);
-    }
-
-    // Logout
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logout realizado com sucesso']);
     }
 }

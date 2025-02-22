@@ -23,7 +23,6 @@ use App\Http\Controllers\TipoMarcacaoController;
 // Rotas Publicas
 Route::post('/login', [AuthController::class, 'login']);
 
-
 //Rotas cliente
 Route::get('/clientes/{id}', [ClienteController::class, 'show']);
 Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);

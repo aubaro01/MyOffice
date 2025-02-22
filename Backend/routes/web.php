@@ -13,7 +13,11 @@ use App\Http\Controllers\AuthController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// routes/web.php ou routes/api.php
+
+// Define a rota para o formulário de login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// Define a rota para o envio do formulário de login
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/', function () {
