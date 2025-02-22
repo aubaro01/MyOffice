@@ -7,7 +7,7 @@ const Home = () => {
       {/* Navbar */}
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow fixed-top">
         <div className="container">
-          <a className="navbar-brand fw-bold text-dark" href="/">PC Auto</a>
+          <a className="navbar-brand fw-bold text-dark" href="/">MyOffice</a>
           <button
             className="navbar-toggler"
             type="button"
