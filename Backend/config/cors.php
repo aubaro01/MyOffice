@@ -1,13 +1,11 @@
 <?php 
-
-// config/cors.php
 return [
-    'paths' => ['api/*', 'sanctum/csrf-cookie'], // Rotas que devem ter CORS habilitado
-    'allowed_methods' => ['*'], // Métodos HTTP permitidos
-    'allowed_origins' => ['http://localhost:3000'], // Domínios permitidos (frontend React)
-    'allowed_origins_patterns' => [], // Padrões de domínios permitidos
-    'allowed_headers' => ['*'], // Headers permitidos
-    'exposed_headers' => [], // Headers expostos na resposta
-    'max_age' => 0, // Tempo de cache do CORS (em segundos)
-    'supports_credentials' => true, // Permite credenciais (cookies, sessões, etc.)
+    'paths' => ['api/*', 'sanctum/csrf-cookie'], // Certifique-se de que api/* está incluído
+    'allowed_methods' => ['*'],
+    'allowed_origins' => ['http://localhost:3000'], // Permitir React
+    'allowed_origins_patterns' => [],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => true, // **Define como true para permitir credenciais**
 ];

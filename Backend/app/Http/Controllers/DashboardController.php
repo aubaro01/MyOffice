@@ -13,7 +13,8 @@ class DashboardController extends Controller
     // Total de clientes
     public function totalClientes()
     {
-        return response()->json(['total' => Cliente::count()]);
+        $totalClientes = Cliente::count();
+        return response()->json(['total-clientes' => $totalClientes]);
     }
 
     // Total de veículos

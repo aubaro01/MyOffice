@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../configure/axiosConfig';
 import Navbar from './components/NavBar';
 import Card from './components/card'; // Importe o componente Card
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Busca o total de clientes
-    axios.get('/api/totalClientes')
+    axios.get('/api/total-clientes')
       .then(response => setTotalClientes(response.data.total))
       .catch(error => console.error('Erro ao buscar Clientes:', error));
 

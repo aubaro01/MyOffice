@@ -1,118 +1,144 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from '../configure/axiosConfig';
-import './login.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { AuthContext } from '../context/Authcontext'; // Importe o AuthContext
+import { useEffect, useState } from "react";
+import Checkbox from "@/Components/Checkbox";
+import GuestLayout from "@/Layouts/GuestLayout";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Head, Link, useForm } from "@inertiajs/react";
+import axios from '../configure/axiosConfig'; // Certifique-se de ajustar a configuração do axios
 
-const Login = () => {
-  const [form, setForm] = useState({ Log_admin: '', Pass_admin: '' });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const userRef = useRef(null);
-  const { login } = useContext(AuthContext); // Use o login do contexto
+export default function Login({ status, canResetPassword }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        email: "",
+        password: "",
+        remember: false,
+    });
 
-  useEffect(() => {
-    if (userRef.current) {
-      userRef.current.focus();
-    }
-  }, []);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prevForm) => ({ ...prevForm, [name]: value }));
-  };
+    useEffect(() => {
+        return () => {
+            reset("password");
+        };
+    }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess(false);
+    const submit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
 
-    try {
-      const response = await axios.post('/login', form, { withCredentials: true });
-      console.log('Resposta da API:', response.data); // Verifique a resposta da API
+        try {
+            const response = await axios.post('/login', data, { withCredentials: true }); // Substitua pela URL correta
+            console.log('Resposta da API:', response.data);
 
-      login(); // Chama a função login do contexto
-      setSuccess(true);
-      setForm({ Log_admin: '', Pass_admin: '' });
-      navigate('/dashboard'); // Redireciona imediatamente após o login
-    } catch (error) {
-      setError('Credenciais inválidas ou erro no servidor');
-      console.error('Erro no login:', error); // Log de erro
-    } finally {
-      setLoading(false);
-    }
-  };
+            // Supondo que você tenha um método login no contexto (ou no estado global) para autenticar o usuário
+            // login(response.data.user);  // Como exemplo, caso você tenha esse método.
 
-  return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2 className="login-title">Login</h2>
-        {success && <div className="alert alert-success">Login bem-sucedido! Redirecionando...</div>}
-        {error && <div className="alert alert-danger">{error}</div>}
-        
-        <form onSubmit={handleSubmit} noValidate>
-          <div className="form-group">
-            <label htmlFor="username">Usuário</label>
-            <input
-              type="text"
-              id="username"
-              name="Log_admin"
-              ref={userRef}
-              value={form.Log_admin}
-              onChange={handleChange}
-              className="form-control"
-              placeholder="Digite seu usuário"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Senha</label>
-            <div className="input-wrapper">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="Pass_admin"
-                value={form.Pass_admin}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Digite sua senha"
-                required
-              />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
-          </div>
-          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-            {loading ? 'Carregando...' : 'Entrar'}
-          </button>
-        </form>
+            setSuccess(true);
+            setData({ email: "", password: "", remember: false }); // Limpar campos após login bem-sucedido
+            // Redirecionar após o login
+            // Exemplo: navigate("/dashboard");
+        } catch (error) {
+            setError('Credenciais inválidas ou erro no servidor');
+            console.error('Erro no login:', error); // Log de erro
+        } finally {
+            setLoading(false);
+        }
 
-        {/* Botão "Voltar para a Home" */}
-        <button
-          onClick={() => navigate('/home')}
-          className="btn btn-secondary w-100 mt-3"
-        >
-          Voltar para a Home
-        </button>
+        // Caso esteja usando Inertia.js, utilize o post
+        // post(route("login"));
+    };
 
-        <p className="text-center mt-3">
-          <button onClick={() => navigate('/recuperar-senha')} className="forgot-password">
-            Esqueceu a senha?
-          </button>
-        </p>
-      </div>
-    </div>
-  );
-};
+    return (
+        <GuestLayout>
+            <Head title="Log in" />
 
-export default Login;
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {status}
+                </div>
+            )}
+
+            {success && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    Login bem-sucedido! Redirecionando...
+                </div>
+            )}
+
+            {error && (
+                <div className="mb-4 font-medium text-sm text-red-600">
+                    {error}
+                </div>
+            )}
+
+            <form onSubmit={submit}>
+                <div>
+                    <InputLabel htmlFor="email" value="Email" />
+
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="mt-1 block w-full"
+                        autoComplete="username"
+                        isFocused={true}
+                        onChange={(e) => setData("email", e.target.value)}
+                    />
+
+                    <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
+
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        className="mt-1 block w-full"
+                        autoComplete="current-password"
+                        onChange={(e) => setData("password", e.target.value)}
+                    />
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="block mt-4">
+                    <label className="flex items-center">
+                        <Checkbox
+                            name="remember"
+                            checked={data.remember}
+                            onChange={(e) =>
+                                setData("remember", e.target.checked)
+                            }
+                        />
+                        <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                            Remember me
+                        </span>
+                    </label>
+                </div>
+
+                <div className="flex items-center justify-end mt-4">
+                    {canResetPassword && (
+                        <Link
+                            href={route("password.request")}
+                            className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
+
+                    <PrimaryButton className="ms-4" disabled={loading || processing}>
+                        {loading || processing ? 'Carregando...' : 'Log in'}
+                    </PrimaryButton>
+                </div>
+            </form>
+        </GuestLayout>
+    );
+}

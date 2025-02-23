@@ -1,19 +1,20 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../context/Authcontext'; // Verifique o caminho
+import { useEffect, useState } from "react";
+import axios from "../configure/axiosConfig";
 
-const ClientesList = () => {
-  const { isAuthenticated } = useContext(AuthContext); // Usa o contexto
+function TotalClientes() {
+  const [total, setTotal] = useState(0);
 
-  if (!isAuthenticated) {
-    return <p>Você não tem permissão para acessar esta página.</p>;
-  }
+  useEffect(() => {
+    axios.get("http://localhost/api/total-clientes")
+      .then((response) => setTotal(response.data.total))
+      .catch((error) => console.error("Erro ao buscar clientes:", error));
+  }, []);
 
   return (
     <div>
-      <h2>Lista de Clientes</h2>
-      {/* Adicione a lógica da tabela de clientes aqui */}
+      <h2>Total de Clientes: {total}</h2>
     </div>
   );
-};
+}
 
-export default ClientesList;
+export default TotalClientes;

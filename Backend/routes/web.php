@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +14,6 @@ use App\Http\Controllers\AuthController;
 */
 
 // Define a rota para o formulário de login
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-
-// Define a rota para o envio do formulário de login
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-
 Route::get('/', function () {
-    return view('login');
+    return view('welcome');
 });

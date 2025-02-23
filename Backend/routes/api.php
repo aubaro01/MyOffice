@@ -9,6 +9,7 @@ use App\Http\Controllers\VeiculoController;
 use App\Http\Controllers\MarcacaoController;
 use App\Http\Controllers\TipoMarcacaoController;
 use App\Http\Controllers\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,9 +67,9 @@ Route::delete('/tipos-marcacao/{id}', [TipoMarcacaoController::class, 'destroy']
 
 
 // Rotas Dashboard
-Route::get('/clientes/count', [DashboardController::class, 'totalClientes']);
-Route::get('/veiculos/count', [DashboardController::class, 'totalVeiculos']);
-Route::get('/marcacoes/count', [DashboardController::class, 'totalMarcacoesMes']);
+Route::get('/total-clientes', [DashboardController::class, 'totalClientes']);
+//Route::get('/veiculos/count', [DashboardController::class, 'totalVeiculos']);
+//Route::get('/marcacoes/count', [DashboardController::class, 'totalMarcacoesMes']);
 
 // Rotas protegidas
 Route::middleware('auth:sanctum')->group(function () {
