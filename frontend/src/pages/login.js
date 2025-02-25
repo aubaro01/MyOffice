@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from '../configure/axiosConfig';
 import './login.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { AuthContext } from '../context/Authcontext'; // Importe o AuthContext
+import { AuthContext } from '../context/Authcontext';
 
 const Login = () => {
   const [form, setForm] = useState({ Log_admin: '', Pass_admin: '' });
